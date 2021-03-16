@@ -33,12 +33,16 @@ if __name__ == '__main__':
     pcube = sys.argv[2]
     in_pickle = sys.argv[3]
     out_pickle = sys.argv[4]
-
+    
+    eps = None
+    maxiter = None
+    if len(sys.argv) > 5:
+    	eps=sys.argv[5]
+    if len(sys.argv) > 6:
+	maxiter=sys.argv[6]   
+    
     out = out(from_pickle="out.p")
     mdcm = MDCM_cube_comparison(charges_path, pcube)
 
-    optimize_and_pickle(mdcm, out_pickle, out, eps=None, maxiter=None)
+    optimize_and_pickle(mdcm, out_pickle, out, eps=eps, maxiter=maxiter)
 
-
-    # charges_path = "charges/butadiene/13-charges/13_charges_refined.xyz"
-    # pcube = "cubes/butadiene/scan_extract_2.xyz.chk.fchk.pot.cube"
