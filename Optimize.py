@@ -46,4 +46,4 @@ if __name__ == '__main__':
     out = out(from_pickle=in_pickle)
     mdcm = MDCM_cube_comparison(charges_path, pcube)
 
-    optimize_and_pickle(mdcm, out_pickle, out, eps=eps, maxiter=maxiter)
+    # optimize_and_pickle(mdcm, out_pickle, out, eps=eps, maxiter=maxiter)

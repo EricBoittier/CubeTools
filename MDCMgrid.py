@@ -48,11 +48,15 @@ def jit_columbic_np(a, b, c):
 
 
 @njit(cache=True, parallel=True)
-def calculate_coulombic_grid(_size_x, _size_y, _size_z, _xyz, _positions_np, _charges_np):
-    output = np.zeros((_size_x, _size_y, _size_z))
-    for i in prange(_size_x):
-        for j in prange(_size_y):
-            for k in prange(_size_z):
+def calculate_coulombic_grid(_xyz, _positions_np, _charges_np):
+    size_x = _xyz.shape[2]
+    size_y = _xyz.shape[1]
+    size_z = _xyz.shape[3]
+
+    output = np.zeros((size_x, size_y, size_z))
+    for i in prange(size_x):
+        for j in prange(size_y):
+            for k in prange(size_z):
                 r = _xyz[:, j, i, k]
                 output[i, j, k] = jit_columbic_np(_positions_np, r, _charges_np)
     return output
@@ -95,7 +99,7 @@ class MDCM_cube_comparison():
         self.charges_np = self.pos_charges_np[:, -1]
 
         self.pcube = pcube
-        self.pcube_data, self.pcube_meta = read_cube(pcube)
+        self.pcube_data, self.pcube_meta = read_cube(self.pcube)
         self.pcube_atoms = self.pcube_meta["atoms"]
         self.org = list(self.pcube_meta["org"])
         self.xvec = list(self.pcube_meta["xvec"])[0]
@@ -105,9 +109,11 @@ class MDCM_cube_comparison():
         self.size_y = self.pcube_data.shape[1]
         self.size_z = self.pcube_data.shape[2]
 
-        self.x_values = np.arange(self.org[0], self.org[0] + self.xvec * self.size_x, self.xvec)
-        self.y_values = np.arange(self.org[1], self.org[1] + self.yvec * self.size_y, self.yvec)
-        self.z_values = np.arange(self.org[2], self.org[2] + self.zvec * self.size_z, self.zvec)
+        self.x_values = np.linspace(self.org[0], self.org[0] + self.xvec * self.size_x, num = self.size_x)
+        self.y_values = np.linspace(self.org[1], self.org[1] + self.yvec * self.size_y, num = self.size_y)
+        self.z_values = np.linspace(self.org[2], self.org[2] + self.zvec * self.size_z, num = self.size_z)
+
+        assert len(self.x_values ) == self.pcube_data.shape[0]
 
         self.xx, self.yy, self.zz = np.meshgrid(self.x_values, self.y_values, self.z_values, indexing="ij")
         self.xyz = np.array(np.meshgrid(self.x_values, self.y_values, self.z_values, indexing="xy"))
@@ -124,8 +130,9 @@ class MDCM_cube_comparison():
         print("Base Error: Testing RMSE() on my cube, ref. pcube", self.get_error_from_positions(self.positions_np))
 
     def get_error_from_positions(self, positions_np):
-        output = calculate_coulombic_grid(self.size_x, self.size_y, self.size_z, self.xyz,
+        output = calculate_coulombic_grid(self.xyz,
                                           positions_np, self.charges_np)
+        assert output.shape == self.pcube_data.shape
         error = RMSE_in_kcal_in_belt(output, self.pcube_data, self.interaction_belt)
         return error
 
