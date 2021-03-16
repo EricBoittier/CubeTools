@@ -26,7 +26,7 @@ def optimize_and_pickle(mdcm, out_pickle, out, eps=None, maxiter=None):
                                      'maxiter': maxiter, 'disp': False,
                                      'return_all': False})
     print(out)
-    pickle.dump(out, open("{}.p".format(out_pickle), "wb"))
+    pickle.dump(out, open("{}".format(out_pickle), "wb"))
 
 if __name__ == '__main__':
     charges_path = sys.argv[1]
