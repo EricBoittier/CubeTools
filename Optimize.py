@@ -39,11 +39,11 @@ if __name__ == '__main__':
     eps = None
     maxiter = None
     if len(sys.argv) > 5:
-        eps = sys.argv[5]
+        eps = float(sys.argv[5])
     if len(sys.argv) > 6:
-        maxiter = sys.argv[6]
+        maxiter = float(sys.argv[6])
 
-    out = out(from_pickle="out.p")
+    out = out(from_pickle=in_pickle)
     mdcm = MDCM_cube_comparison(charges_path, pcube)
 
     optimize_and_pickle(mdcm, out_pickle, out, eps=eps, maxiter=maxiter)

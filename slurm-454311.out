@@ -1,5 +1,0 @@
-node12.cluster
-  File "Optimize.py", line 42
-    maxiter=sys.argv[6]   
-                         ^
-TabError: inconsistent use of tabs and spaces in indentation

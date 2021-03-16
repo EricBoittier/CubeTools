@@ -1,9 +1,0 @@
-node12.cluster
-Traceback (most recent call last):
-  File "Optimize.py", line 3, in <module>
-    from MDCMgrid import *
-  File "/home/boittier/CubeTools/MDCMgrid.py", line 3, in <module>
-    from Cube import read_charges_refined, read_cube
-  File "/home/boittier/CubeTools/Cube.py", line 2, in <module>
-    import torch
-ModuleNotFoundError: No module named 'torch'
