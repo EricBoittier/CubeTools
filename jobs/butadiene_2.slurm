@@ -13,18 +13,20 @@ charges="charges/butadiene/13-charges/13_charges_refined.xyz"
 cube="cubes/butadiene/scan_extract_2.xyz.chk.fchk.pot.cube"
 in_pickle="butadiene_2.p"
 out_pickle="butadiene_2.p"
-eps=1.5e-7
-maxiter=50
+eps=1.5e-8
+maxiter=500
+
+cd ..;
+rm $out_pickle.out
+
+echo $charges >> $out_pickle.out
+echo $cube >> $out_pickle.out
+echo $in_pickle >> $out_pickle.out
+echo $out_pickle >> $out_pickle.out
+echo $eps >> $out_pickle.out
+echo $maxiter >> $out_pickle.out
 
 
-echo $charges
-echo $cube
-echo $in_pickle
-echo $out_pickle
-echo $eps
-echo $maxiter
 
-
-cd ..
-NUMBA_NUM_THREADS=8 python Optimize.py $charges $cube $in_pickle $out_pickle $eps $maxiter
+NUMBA_NUM_THREADS=8 python Optimize.py $charges $cube $in_pickle $out_pickle $eps $maxiter >> $out_pickle.out
 

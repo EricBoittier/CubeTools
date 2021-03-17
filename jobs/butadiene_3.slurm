@@ -2,7 +2,7 @@
 
 #SBATCH --job-name=butadi_3
 #SBATCH --nodes=1
-#SBATCH --ntasks=8
+#SBATCH --ntasks=16
 #SBATCH --mem-per-cpu=1000
 
 hostname  # in case the job crashes we know where it was
@@ -11,10 +11,10 @@ conda activate Numba
 
 charges="charges/butadiene/13-charges/13_charges_refined.xyz" 
 cube="cubes/butadiene/scan_extract_3.xyz.chk.fchk.pot.cube"
-in_pickle="butadiene_2.p"
+in_pickle="butadiene_3.p"
 out_pickle="butadiene_3.p"
-eps=1.5e-6
-maxiter=10
+eps=1.5e-8
+maxiter=500
 
 
 echo $charges
@@ -25,6 +25,15 @@ echo $eps
 echo $maxiter
 
 
+
+echo $charges >> $out_pickle.out
+echo $cube >> $out_pickle.out
+echo $in_pickle >> $out_pickle.out
+echo $out_pickle >> $out_pickle.out
+echo $eps >> $out_pickle.out
+echo $maxiter >> $out_pickle.out
+
+
 cd ..
-NUMBA_NUM_THREADS=8 python Optimize.py $charges $cube $in_pickle $out_pickle $eps $maxiter
+NUMBA_NUM_THREADS=16 python Optimize.py $charges $cube $in_pickle $out_pickle $eps $maxiter >> $out_pickle.out
 
