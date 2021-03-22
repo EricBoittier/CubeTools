@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=butadi_6
+#SBATCH --job-name=butadi_7
 #SBATCH --nodes=1
 #SBATCH --ntasks=8
 #SBATCH --mem-per-cpu=1000
@@ -12,7 +12,7 @@ conda activate Numba
 charges="charges/butadiene/13-charges/13_charges_refined.xyz" 
 cube="cubes/butadiene/scan_extract_3.xyz.chk.fchk.pot.cube"
 in_pickle="butadiene_6.p"
-out_pickle="butadiene_6.p"
+out_pickle="butadiene_7.p"
 eps=1.5e-7
 maxiter=100
 
