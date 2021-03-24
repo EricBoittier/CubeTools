@@ -127,7 +127,7 @@ class MDCM_cube_comparison():
         self.known_VDW = np.array(self.known_VDW, dtype=np.float64)
         self.interaction_belt = in_interaction_belt(self.atom_posistions, self.xyz, self.known_VDW)
 
-        print("Base Error: Testing RMSE() on my cube, ref. pcube", self.get_error_from_positions(self.positions_np))
+        #print("Base Error: Testing RMSE() on my cube, ref. pcube", self.get_error_from_positions(self.positions_np))
 
     def get_error_from_positions(self, positions_np):
         output = calculate_coulombic_grid(self.xyz,
@@ -135,6 +135,18 @@ class MDCM_cube_comparison():
         assert output.shape == self.pcube_data.shape
         error = RMSE_in_kcal_in_belt(output, self.pcube_data, self.interaction_belt)
         return error
+
+    def get_error(self):
+        output = calculate_coulombic_grid(self.xyz,
+                                          self.positions_np, self.charges_np)
+        assert output.shape == self.pcube_data.shape
+        error = RMSE_in_kcal_in_belt(output, self.pcube_data, self.interaction_belt)
+        return error
+
+
+    def set_positions(self, x):
+        for i in range(len(x)):
+            self.positions_np[i % 3, i // 3] = x[i]
 
     def objective(self, x):
         for i in range(len(x)):
