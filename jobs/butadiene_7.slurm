@@ -10,7 +10,7 @@ source ~/miniconda3/etc/profile.d/conda.sh
 conda activate Numba
 
 charges="charges/butadiene/13-charges/13_charges_refined.xyz" 
-cube="cubes/butadiene/scan_extract_3.xyz.chk.fchk.pot.cube"
+cube="cubes/butadiene/scan_extract_7.xyz.chk.fchk.pot.cube"
 in_pickle="butadiene_6.p"
 out_pickle="butadiene_7.p"
 eps=1.5e-7
