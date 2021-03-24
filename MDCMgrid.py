@@ -37,7 +37,7 @@ def in_interaction_belt(positions, _xyz, _vdw):
 
 @jit(nopython=True, cache=True)
 def jit_columbic_np(a, b, c):
-    b = np.asarray([[b[0]] * 13, [b[1]] * 13, [b[2]] * 13])
+    #b = np.asarray([[b[0]] * len(b[0]), [b[1]] *  len(b[0]), [b[2]] *  len(b[0])])
     difference = a - b
     diff_sqr = np.square(difference)
     sum_diff = np.sum(diff_sqr, axis=0)  # sum (dif x , dif y, dif z) = (sum)
@@ -58,7 +58,9 @@ def calculate_coulombic_grid(_xyz, _positions_np, _charges_np):
         for j in prange(size_y):
             for k in prange(size_z):
                 r = _xyz[:, j, i, k]
-                output[i, j, k] = jit_columbic_np(_positions_np, r, _charges_np)
+		r = b
+		b = np.asarray([[b[0]] * len(b[0]), [b[1]] *  len(b[0]), [b[2]] *  len(b[0])])
+                output[i, j, k] = jit_columbic_np(_positions_np, b, _charges_np)
     return output
 
 
