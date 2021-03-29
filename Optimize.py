@@ -35,7 +35,7 @@ if __name__ == '__main__':
     pcube = sys.argv[2]
     in_pickle = sys.argv[3]
     out_pickle = sys.argv[4]
-
+    print("Program Begingeth")
     eps = None
     maxiter = None
     if len(sys.argv) > 5:
@@ -45,6 +45,7 @@ if __name__ == '__main__':
 
     mdcm = MDCM_cube_comparison(charges_path, pcube)
     if in_pickle == "False":
+        print("Setting x as mdcm.positions_np")
         out = out(x=mdcm.positions_np)
     else:
         out = out(from_pickle=in_pickle)

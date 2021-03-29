@@ -58,8 +58,8 @@ def calculate_coulombic_grid(_xyz, _positions_np, _charges_np):
         for j in prange(size_y):
             for k in prange(size_z):
                 r = _xyz[:, j, i, k]
-                r = b
-                b = np.asarray([[b[0]] * len(b[0]), [b[1]] * len(b[0]), [b[2]] * len(b[0])])
+                b = r
+                b = np.asarray([[b[0]] * _charges_np.shape[0], [b[1]] * _charges_np.shape[0], [b[2]] * _charges_np.shape[0]])
                 output[i, j, k] = jit_columbic_np(_positions_np, b, _charges_np)
     return output
 

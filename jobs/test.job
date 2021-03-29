@@ -9,8 +9,8 @@ hostname  # in case the job crashes we know where it was
 source ~/miniconda3/etc/profile.d/conda.sh
 conda activate Numba
 
-charges="~/water/6_charges_refined.xyz" 
-cube="~/water/Water_OPT.pot.cube"
+charges="/home/boittier/water/6_charges_refined.xyz" 
+cube="/home/boittier/water/Water_OPT.pot.cube"
 in_pickle="False"
 out_pickle="Water_OPT"
 eps=1.5e-7
