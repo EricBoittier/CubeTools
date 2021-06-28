@@ -24,8 +24,8 @@ def optimize_and_pickle(mdcm, out_pickle, out, eps=None, maxiter=None):
                             jac=None, tol=None, callback=None,
                             options={'gtol': 1e-05, 'norm': np.inf,
                                      'eps': eps,
-                                     'maxiter': maxiter, 'disp': False,
-                                     'return_all': False})
+                                     'maxiter': maxiter, 'disp': True,
+                                     'return_all': True})
     print(out)
     pickle.dump(out, open("{}".format(out_pickle), "wb"))
 
@@ -42,11 +42,18 @@ if __name__ == '__main__':
         eps = float(sys.argv[5])
     if len(sys.argv) > 6:
         maxiter = float(sys.argv[6])
+    if len(sys.argv) > 7:
+        ignore_indices = [int(x) for x in sys.argv[7].split("_")]
+
 
     mdcm = MDCM_cube_comparison(charges_path, pcube)
     if in_pickle == "False":
         print("Setting x as mdcm.positions_np")
         out = out(x=mdcm.positions_np)
     else:
+        print("Setting x from in_pickle")
         out = out(from_pickle=in_pickle)
+
     optimize_and_pickle(mdcm, out_pickle, out, eps=eps, maxiter=maxiter)
+
+
